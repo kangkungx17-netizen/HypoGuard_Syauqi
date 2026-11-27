@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALPINE SAFE // Hipotermia Field Guide</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Bebas Neue & Space Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Times+New+Roman&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mint: '#e2ffcc',       /* Highlighter Mint */
+            sage: '#84907f',       /* Sage Stone */
+            carbon: '#161b13',     /* Carbon Ink */
+            charcoal: '#2d3329',   /* Forest Charcoal */
+            topogray: '#dde2e4',   /* Topo Gray */
+          },
+          fontFamily: {
+            display: ['Bebas Neue', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+            serif: ['Times New Roman', 'serif'],
+          },
+          spacing: {
+            '67': '67px',
+            '70': '70px',
+            '190': '190px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Global Reset & Typography Baseline */
+    body {
+      background-color: #161b13;
+      color: #dde2e4;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    /* Sharp 0px Border Radius Override */
+    * {
+      border-radius: 0px !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #161b13;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #84907f;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #e2ffcc;
+    }
+
+    /* Topographic Grid Lines Effect */
+    .topo-bg {
+      background-image: radial-gradient(#84907f 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .topo-bg-light {
+      background-image: radial-gradient(#2d3329 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Tilted polaroid photos transitions */
+    .polaroid-card {
+      transition: transform 0.3s ease, z-index 0.3s ease;
+    }
+    .polaroid-card:hover {
+      transform: scale(1.03) rotate(0deg) !important;
+      z-index: 30 !important;
+    }
+
+    /* Tabs Styling */
+    .tab-btn.active {
+      background-color: #e2ffcc;
+      color: #161b13;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="selection:bg-mint selection:text-carbon">
+
+  <!-- ==================== HEADER / NAV ==================== -->
+  <header class="sticky top-0 z-50 bg-carbon/95 border-b border-mint/20 backdrop-blur-md px-4 md:px-8 py-3 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+      <div class="w-3 h-3 bg-mint animate-pulse"></div>
+      <a href="#" class="font-display text-2xl md:text-3xl tracking-wide text-mint hover:opacity-90">
+        ALPINE SAFE <span class="text-sage text-lg font-mono">// FIELD GUIDE</span>
+      </a>
+    </div>
+
+    <!-- Desktop Nav Links -->
+    <nav class="hidden lg:flex items-center space-x-2 text-xs font-mono uppercase">
+      <a href="#apa-itu" class="px-3 py-1.5 text-mint hover:bg-mint/10 border border-transparent hover:border-mint transition">01. Defisit Suhu</a>
+      <a href="#penyebab" class="px-3 py-1.5 text-mint hover:bg-mint/10 border border-transparent hover:border-mint transition">02. 10 Penyebab</a>
+      <a href="#pencegahan" class="px-3 py-1.5 text-mint hover:bg-mint/10 border border-transparent hover:border-mint transition">03. Pencegahan</a>
+      <a href="#tahapan" class="px-3 py-1.5 text-mint hover:bg-mint/10 border border-transparent hover:border-mint transition">04. Gejala & Tindakan</a>
+      <a href="#dampak" class="px-3 py-1.5 text-mint hover:bg-mint/10 border border-transparent hover:border-mint transition">05. Dampak Medis</a>
+      <a href="#kalkulator" class="px-3 py-1 border border-mint bg-mint text-carbon font-bold hover:bg-transparent hover:text-mint transition">
+        [ SIMULATOR RISIKO ]
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="lg:hidden border border-mint text-mint px-3 py-1 text-xs font-mono uppercase">
+      [ MENU ]
+    </button>
+  </header>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-menu" class="hidden fixed inset-x-0 top-[53px] z-40 bg-carbon border-b border-mint p-4 text-xs font-mono space-y-2">
+    <a href="#apa-itu" class="block py-2 text-mint border-b border-charcoal">01. APA ITU HIPOTERMIA</a>
+    <a href="#penyebab" class="block py-2 text-mint border-b border-charcoal">02. 10 PENYEBAB UTAMA</a>
+    <a href="#pencegahan" class="block py-2 text-mint border-b border-charcoal">03. MANAJEMEN PENCEGAHAN</a>
+    <a href="#tahapan" class="block py-2 text-mint border-b border-charcoal">04. TAHAPAN & PENANGANAN</a>
+    <a href="#dampak" class="block py-2 text-mint border-b border-charcoal">05. DAMPAK FISIK MEDIS</a>
+    <a href="#kalkulator" class="block py-2 text-carbon bg-mint text-center font-bold">SIMULATOR RISIKO HIPOTERMIA</a>
+  </div>
+
+
+  <!-- ==================== HERO SECTION (DARK BAND) ==================== -->
+  <section class="relative min-h-[90vh] bg-carbon text-topogray topo-bg flex flex-col justify-between px-4 md:px-12 py-12 border-b border-mint/20 overflow-hidden">
+    
+    <!-- Top Metadata Badge -->
+    <div class="flex justify-between items-start pt-4">
+      <div class="border border-mint/40 p-2 text-[10px] md:text-xs text-mint uppercase tracking-wider bg-carbon/80 max-w-xs">
+        <p>[ DOKUMEN MITIGASI BENCANA ALAM ]</p>
+        <p>EVALUASI RISIKO KETINGGIAN & ANCAMAN SANGAT DINGIN</p>
+      </div>
+      
+      <!-- Circular Icon Badge -->
+      <div class="w-12 h-12 border-2 border-mint rounded-full flex items-center justify-center text-mint font-mono text-xs">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 stroke-mint" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Massive Display Headline -->
+    <div class="my-auto py-8">
+      <p class="text-mint text-xs md:text-sm uppercase tracking-widest font-mono mb-2">[ ANCAMAN UTAMA PENDAKI ]</p>
+      <h1 class="font-display text-[80px] sm:text-[120px] md:text-[180px] lg:text-[240px] leading-[0.85] text-mint uppercase tracking-tight break-words select-none">
+        HIPOTERMIA
+      </h1>
+      <p class="text-topogray max-w-2xl text-sm md:text-base font-mono mt-4 border-l-2 border-mint pl-4 leading-relaxed">
+        Berdasarkan data statistik dan studi kasus spesifik, hipotermia merupakan <strong class="text-mint">ancaman paling sering terjadi sekaligus penyebab kematian tertinggi</strong> dalam aktivitas pendakian gunung di Indonesia maupun dunia.
+      </p>
+    </div>
+
+    <!-- Bottom Quick Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-mint/30 pt-6 text-xs font-mono">
+      <div>
+        <span class="text-sage block">[ SUHU NORMAL TUBUH ]</span>
+        <span class="text-mint text-lg font-bold">36.0°C – 37.0°C</span>
+      </div>
+      <div>
+        <span class="text-sage block">[ THRESHOLD HIPOTERMIA ]</span>
+        <span class="text-mint text-lg font-bold">&lt; 35.0°C</span>
+      </div>
+      <div>
+        <span class="text-sage block">[ PENGEDALI UTAMA ]</span>
+        <span class="text-topogray">Kecepatan Hilang Panas &gt; Produksi Panas</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 1: APA ITU HIPOTERMIA? (LIGHT BAND) ==================== -->
+  <section id="apa-itu" class="bg-topogray text-charcoal py-16 px-4 md:px-12 border-b border-charcoal topo-bg-light">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-charcoal pb-4 mb-12">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-sage">[ MEKANISME MEDIS ]</span>
+          <h2 class="font-display text-5xl md:text-7xl leading-none text-charcoal uppercase">01. APA ITU HIPOTERMIA?</h2>
+        </div>
+        <p class="text-xs font-mono text-charcoal mt-2 md:mt-0">[ PATOFISIOLOGI ELEVASI ]</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Main Description -->
+        <div class="lg:col-span-7 space-y-6 text-sm leading-relaxed font-mono">
+          <p class="bg-white/80 p-6 border border-charcoal text-base">
+            <strong>Hipotermia</strong> adalah kondisi ketika suhu inti tubuh mengalami penurunan secara drastis hingga di bawah <span class="bg-charcoal text-mint px-2 py-0.5 font-bold">35°C</span>. Suhu normal tubuh manusia berkisar di antara <span class="underline decoration-2 decoration-sage">36–37°C</span>.
+          </p>
+          <p class="text-charcoal/90">
+            Kondisi kritis ini terjadi ketika tubuh kehilangan panas jauh lebih cepat daripada kemampuannya untuk memproduksi panas sendiri. Kehilangan panas ekstrem ini biasanya dipicu saat tubuh terpapar lingkungan dengan suhu rendah dan kelembapan tinggi.
+          </p>
+          
+          <div class="border-2 border-charcoal p-4 bg-sage/20 space-y-2">
+            <h4 class="font-bold text-xs uppercase text-charcoal">[ EFEK DOMINO PENURUNAN SUHU ]</h4>
+            <p class="text-xs">
+              Seiring tubuh menjadi semakin dingin, fungsi seluruh sistem organ melambat secara bertahap. Hal ini mengakibatkan penurunan fungsi mental, hilangnya koordinasi motorik halus maupun kasar, dan pada akhirnya hilangnya kesadaran total hingga ancaman henti jantung.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Side: Graphic Visual Cards -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="border border-charcoal p-5 bg-white shadow-none">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-sage">TAHAP PERTAMA</span>
+              <span class="text-xs font-bold text-red-700">35°C - 32.2°C</span>
+            </div>
+            <h3 class="font-display text-2xl text-charcoal uppercase">Penurunan Fungsi Mental</h3>
+            <p class="text-xs text-charcoal/80 font-mono mt-1">Kebingungan, bicaranya pelat (pelo), persepsi memburuk, serta penurunan keputusan logis saat di jalur.</p>
+          </div>
+
+          <div class="border border-charcoal p-5 bg-white shadow-none">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-sage">TAHAP KEDUA</span>
+              <span class="text-xs font-bold text-red-700">32.2°C - 28°C</span>
+            </div>
+            <h3 class="font-display text-2xl text-charcoal uppercase">Hilangnya Koordinasi</h3>
+            <p class="text-xs text-charcoal/80 font-mono mt-1">Otot kaku, tersandung terus-menerus, tubuh berhenti menggigil secara misterius (tanda bahaya tinggi).</p>
+          </div>
+
+          <div class="border border-charcoal p-5 bg-charcoal text-topogray">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-mint">TAHAP KRITIS</span>
+              <span class="text-xs font-bold text-mint">&lt; 28°C</span>
+            </div>
+            <h3 class="font-display text-2xl text-mint uppercase">Hilang Kesadaran & Kolaps</h3>
+            <p class="text-xs text-topogray/80 font-mono mt-1">Pernapasan dangkal, denyut nadi amat lambat, risiko terhentinya detak jantung secara mendadak.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 2: 10 PENYEBAB (DARK BAND + TILTED POLAROIDS) ==================== -->
+  <section id="penyebab" class="bg-carbon text-topogray py-16 px-4 md:px-12 border-b border-mint/20 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-mint/30 pb-4 mb-12">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-mint">[ FAKTOR RISIKO LAPANGAN ]</span>
+          <h2 class="font-display text-5xl md:text-7xl leading-none text-mint uppercase">02. 10 PENYEBAB HIPOTERMIA DI GUNUNG</h2>
+        </div>
+        <p class="text-xs font-mono text-sage">[ DOKUMEN IDENTIFIKASI BAHAYA ]</p>
+      </div>
+
+      <!-- Tilted Photo Scrapbook Cluster + Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+        
+        <!-- Scattered Polaroid Visuals -->
+        <div class="lg:col-span-5 relative h-[360px] flex items-center justify-center my-6 lg:my-0">
+          
+          <!-- Photo 1 -->
+          <div class="polaroid-card absolute w-60 bg-topogray text-charcoal p-3 border border-charcoal -rotate-6 top-4 left-2 shadow-2xl z-10">
+            <div class="h-40 bg-charcoal flex items-center justify-center overflow-hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-mint opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+              </svg>
+            </div>
+            <p class="font-mono text-[10px] uppercase font-bold mt-2 text-center">[ FIG. A: PAKAIAN BASAH HUJAN ]</p>
+          </div>
+
+          <!-- Photo 2 -->
+          <div class="polaroid-card absolute w-60 bg-topogray text-charcoal p-3 border border-charcoal rotate-6 bottom-4 right-2 shadow-2xl z-20">
+            <div class="h-40 bg-forest flex items-center justify-center bg-charcoal/90 overflow-hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-mint opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1" d="M14 5l3 3m0 0l-3 3m3-3H3m10 5l3 3m0 0l-3 3m3-3H3" />
+              </svg>
+            </div>
+            <p class="font-mono text-[10px] uppercase font-bold mt-2 text-center">[ FIG. B: ANGIN KENCANG & EXTREME ]</p>
+          </div>
+
+        </div>
+
+        <!-- 10 Causes List Grid -->
+        <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+          
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">01.</span>
+            <p class="mt-1 font-bold text-topogray">Pakaian Lembab</p>
+            <p class="text-sage text-[11px] mt-0.5">Akibat keringat berlebih saat melakukan aktivitas fisik berat di jalur mendaki.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">02.</span>
+            <p class="mt-1 font-bold text-topogray">Pakaian Basah Total</p>
+            <p class="text-sage text-[11px] mt-0.5">Terpapar hujan deras tanpa perlindungan mantel kedap air yang layak.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">03.</span>
+            <p class="mt-1 font-bold text-topogray">Proteksi Tidak Memadai</p>
+
+            <p class="text-sage text-[11px] mt-0.5">Tidak memiliki perlindungan terpaan angin (windproof) atau isolasi suhu termal.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">04.</span>
+            <p class="mt-1 font-bold text-topogray">Defisit Makanan & Cairan</p>
+            <p class="text-sage text-[11px] mt-0.5">Asupan kalori dan hidrasi tidak mencukupi sebelum maupun selama aktivitas pendakian.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">05.</span>
+            <p class="mt-1 font-bold text-topogray">Diam Dalam Waktu Lama</p>
+            <p class="text-sage text-[11px] mt-0.5">Berhenti beraktivitas lebih dari 15 menit di area dingin tanpa memakai jaket hangat ekstra.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">06.</span>
+            <p class="mt-1 font-bold text-topogray">Kondisi Mental Buruk</p>
+            <p class="text-sage text-[11px] mt-0.5">Mengalami rasa takut, keraguan mendalam, panik, dan ketidakpastian situasi.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">07.</span>
+            <p class="mt-1 font-bold text-topogray">Cedera atau Sakit</p>
+            <p class="text-sage text-[11px] mt-0.5">Adanya luka fisik atau kondisi medis bawaan yang memicu penurunan respon imun tubuh.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">08.</span>
+            <p class="mt-1 font-bold text-topogray">Kelelahan Ekstrem</p>
+            <p class="text-sage text-[11px] mt-0.5">Energi otot terkuras habis sehingga tubuh gagal memproduksi panas lewat metabolisme.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">09.</span>
+            <p class="mt-1 font-bold text-topogray">Absensi Tempat Berlindung</p>
+            <p class="text-sage text-[11px] mt-0.5">Tidak ada tenda, flysheet, atau goa/shelter saat terjebak dalam badai gunung.</p>
+          </div>
+
+          <div class="border border-mint/20 p-3 bg-carbon/60 hover:border-mint transition">
+            <span class="text-mint font-bold text-sm">10.</span>
+            <p class="mt-1 font-bold text-topogray">Cuaca Ekstrem Terbuka</p>
+            <p class="text-sage text-[11px] mt-0.5">Hantaman angin kencang (wind chill factor) yang secara drastis mempercepat pelepasan panas.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 3: CARA MENCEGAH (LIGHT BAND) ==================== -->
+  <section id="pencegahan" class="bg-topogray text-charcoal py-16 px-4 md:px-12 border-b border-charcoal">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-charcoal pb-4 mb-12">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-sage">[ PROTOKOL KESELAMATAN ]</span>
+          <h2 class="font-display text-5xl md:text-7xl leading-none text-charcoal uppercase">03. 10 CARA MENCEGAH HIPOTERMIA</h2>
+        </div>
+        <p class="text-xs font-mono text-charcoal">[ STRATEGI LAPISAN & MANAJEMEN ]</p>
+      </div>
+
+      <!-- Feature 1: Layering System Interactive Visual -->
+      <div class="bg-white border-2 border-charcoal p-6 mb-12">
+        <div class="flex items-center space-x-2 mb-4">
+          <span class="bg-charcoal text-mint text-xs font-bold px-2 py-1 uppercase font-mono">PANDUAN UTAMA</span>
+          <h3 class="font-display text-3xl uppercase text-charcoal">SISTEM PAKAIAN 3 LAPIS (LAYERING SYSTEM)</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs mt-6">
+          
+          <!-- Base Layer -->
+          <div class="border-t-4 border-charcoal bg-topogray/40 p-4 relative">
+            <div class="text-sage font-bold uppercase text-[10px] mb-1">LAPISAN 01</div>
+            <h4 class="font-display text-2xl text-charcoal mb-2 uppercase">BASE LAYER</h4>
+            <p class="font-bold text-charcoal mb-2">Menyerap & Mengalirkan Keringat</p>
+            <p class="text-charcoal/80 text-[11px]">
+              Gunakan bahan sintetis (Polyester/Nylon) atau Wool Merino yang cepat kering (*quick dry*). <strong class="text-red-700">SANGAT DILARANG menggunakan kaos katun</strong> karena menyerap air dan menahan dingin di kulit.
+            </p>
+          </div>
+
+          <!-- Middle Layer -->
+          <div class="border-t-4 border-sage bg-topogray/40 p-4 relative">
+            <div class="text-sage font-bold uppercase text-[10px] mb-1">LAPISAN 02</div>
+            <h4 class="font-display text-2xl text-charcoal mb-2 uppercase">MIDDLE LAYER</h4>
+            <p class="font-bold text-charcoal mb-2">Menjaga & Mengisolasi Panas</p>
+            <p class="text-charcoal/80 text-[11px]">
+              Mengunci udara hangat yang dihasilkan oleh tubuh. Gunakan jaket ber-bahan Fleece, Down (bulu angsa), atau Primaloft sintetis tebal.
+            </p>
+          </div>
+
+          <!-- Outer Layer -->
+          <div class="border-t-4 border-mint bg-charcoal text-topogray p-4 relative">
+            <div class="text-mint font-bold uppercase text-[10px] mb-1">LAPISAN 03</div>
+            <h4 class="font-display text-2xl text-mint mb-2 uppercase">OUTER LAYER</h4>
+            <p class="font-bold text-topogray mb-2">Perlindungan Angin & Hujan</p>
+            <p class="text-topogray/80 text-[11px]">
+              Lapisan cangkang (*Hard Shell*) kedap air (*waterproof*) dan tahan terpaan angin kencang (*windproof*) dengan membran bernapas seperti Gore-Tex.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Remaining 9 Prevention Rules Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+        
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #02</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Sifat Bahan Pakaian</p>
+          <p class="text-charcoal/80 mt-1">Gunakan lapisan pakaian yang menyerap keringat, cepat kering, dan memberi kehangatan di balik outer kedap air.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #03</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Ganti Pakaian Basah</p>
+          <p class="text-charcoal/80 mt-1">Jangan biarkan pakaian basah menempel di tubuh terlalu lama. Segera ganti begitu sampai di area aman/tenda.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #04</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Atur Sirkulasi Udara</p>
+          <p class="text-charcoal/80 mt-1">Buka zipper saat merasa terlalu panas untuk menghindari keringat berlebih yang memicu tubuh menggigil nanti.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #05</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Pelindung Ekstremitas</p>
+          <p class="text-charcoal/80 mt-1">Wajib gunakan kupluk/beanie, sarung tangan hangat, serta kaus kaki tebal kering untuk melindungi ujung saraf.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #06</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Asupan Nutrisi & Cairan Warm</p>
+          <p class="text-charcoal/80 mt-1">Konsumsi makanan kaya kalori tinggi dan minuman manis hangat secara teratur untuk menyuplai energi pemanas tubuh.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #07</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Gunakan Matras/Isolator</p>
+          <p class="text-charcoal/80 mt-1">Hindari duduk atau berbaring langsung di tanah dingin. Gunakan alas matras atau duduk di atas tas.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #08</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Cari Tempat Berlindung</p>
+          <p class="text-charcoal/80 mt-1">Segera cari atau bangun tempat berlindung (*shelter*) begitu badai atau cuaca buruk mulai menerjang.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #09</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Kenali Batas Kemampuan</p>
+          <p class="text-charcoal/80 mt-1">Jujur pada kondisi fisik diri sendiri. Jangan paksakan berjalan jika sudah merasa kelelahan ekstrem.</p>
+        </div>
+
+        <div class="border border-charcoal p-4 bg-white/60">
+          <span class="text-sage font-bold">RULE #10</span>
+          <p class="font-bold text-charcoal mt-1 text-sm">Ikuti Pemandu Lokal</p>
+          <p class="text-charcoal/80 mt-1">Patuhi arahan dari pemandu lokal atau ketua rombongan yang lebih berpengalaman memahami medan gunung.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 4: TAHAPAN & PENANGANAN (DARK BAND + TABS) ==================== -->
+  <section id="tahapan" class="bg-carbon text-topogray py-16 px-4 md:px-12 border-b border-mint/20">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-mint/30 pb-4 mb-8">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-mint">[ DIAGNOSIS & PERTOLONGAN PERTAMA ]</span>
+          <h2 class="font-display text-5xl md:text-7xl leading-none text-mint uppercase">04. TAHAPAN & PENANGANAN</h2>
+        </div>
+        <p class="text-xs font-mono text-sage">[ PROTOKOL PERTOLONGAN DARURAT ]</p>
+      </div>
+
+      <!-- Custom Interactive Tabs -->
+      <div class="flex flex-wrap gap-2 mb-8 font-mono text-xs">
+        <button onclick="switchTab('ringan')" id="tab-ringan" class="tab-btn active px-5 py-3 border border-mint text-mint uppercase tracking-wider">
+          STAGE 1: RINGAN (32.2°C – 35°C)
+        </button>
+        <button onclick="switchTab('sedang')" id="tab-sedang" class="tab-btn px-5 py-3 border border-mint text-mint uppercase tracking-wider">
+          STAGE 2: SEDANG (28°C – 32.2°C)
+        </button>
+        <button onclick="switchTab('berat')" id="tab-berat" class="tab-btn px-5 py-3 border border-mint text-mint uppercase tracking-wider">
+          STAGE 3: BERAT (&lt; 28°C)
+        </button>
+      </div>
+
+      <!-- TAB CONTENT 1: RINGAN -->
+      <div id="content-ringan" class="tab-content border-2 border-mint p-6 md:p-8 bg-carbon/90">
+        <div class="flex flex-col md:flex-row justify-between items-start border-b border-mint/30 pb-4 mb-6">
+          <div>
+            <span class="bg-mint text-carbon px-2 py-0.5 font-bold font-mono text-xs">SUHU TUBUH: 32.2°C – 35.0°C</span>
+            <h3 class="font-display text-4xl text-mint uppercase mt-2">HIPOTERMIA RINGAN</h3>
+          </div>
+          <p class="text-xs font-mono text-sage mt-2 md:mt-0 max-w-sm">Tubuh masih berupaya melakukan perlawanan aktif memproduksi panas sendiri.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs">
+          
+          <!-- Symptoms -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-mint text-sm uppercase tracking-wider border-b border-mint/20 pb-1">[ TANDA & GEJALA ]</h4>
+            <ul class="space-y-2 list-disc list-inside text-topogray">
+              <li><strong class="text-mint">Menggigil hebat</strong> secara terus-menerus.</li>
+              <li>Kulit tampak pucat atau keabu-abuan.</li>
+              <li>Penurunan konsentrasi dan daya ingat.</li>
+              <li>Bicara tidak jelas atau pelo (*slurred speech*).</li>
+              <li>Rasa lelah, lemas berlebih, atau mudah marah.</li>
+              <li>Koordinasi tubuh memburuk (tersandung/kaku jari).</li>
+              <li><strong class="text-mint">Takikardia:</strong> Jantung berdetak lebih cepat (&gt; 100 x/menit).</li>
+              <li><strong class="text-mint">Takipnea:</strong> Bernapas jauh lebih cepat (&gt; 35 x/menit).</li>
+            </ul>
+          </div>
+
+          <!-- Actions -->
+          <div class="space-y-3 bg-mint/5 p-4 border border-mint/30">
+            <h4 class="font-bold text-mint text-sm uppercase tracking-wider border-b border-mint/20 pb-1">[ TINDAKAN PERTOLONGAN ]</h4>
+            <ul class="space-y-2 text-topogray">
+              <li class="flex items-start"><span class="text-mint mr-2">▶</span> Bawa korban ke tempat berlindung / lokasi yang terlindung dari angin kencang.</li>
+              <li class="flex items-start"><span class="text-mint mr-2">▶</span> Ganti seluruh pakaian yang basah dengan pakaian yang kering sepenuhnya.</li>
+              <li class="flex items-start"><span class="text-mint mr-2">▶</span> Selimuti korban dengan jaket tebal, sleeping bag, atau *emergency blanket* (selimut foil).</li>
+              <li class="flex items-start"><span class="text-mint mr-2">▶</span> Berikan makanan hangat berenergi tinggi atau minuman manis hangat secara perlahan.</li>
+              <li class="flex items-start"><span class="text-mint mr-2">▶</span> Jaga posisi tubuh korban tetap mendatar dan beri alas/matras agar tidak bersentuhan langsung dengan tanah.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB CONTENT 2: SEDANG -->
+      <div id="content-sedang" class="tab-content hidden border-2 border-yellow-400 p-6 md:p-8 bg-carbon/90">
+        <div class="flex flex-col md:flex-row justify-between items-start border-b border-yellow-400/30 pb-4 mb-6">
+          <div>
+            <span class="bg-yellow-400 text-carbon px-2 py-0.5 font-bold font-mono text-xs">SUHU TUBUH: 28.0°C – 32.2°C</span>
+            <h3 class="font-display text-4xl text-yellow-400 uppercase mt-2">HIPOTERMIA SEDANG</h3>
+          </div>
+          <p class="text-xs font-mono text-yellow-400/80 mt-2 md:mt-0 max-w-sm">Tubuh berhenti menggigil. Ini merupakan PERTANDA SANGAT BURUK & BAHAYA.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs">
+          
+          <!-- Symptoms -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-yellow-400 text-sm uppercase tracking-wider border-b border-yellow-400/20 pb-1">[ TANDA & GEJALA ]</h4>
+            <ul class="space-y-2 list-disc list-inside text-topogray">
+              <li><strong class="text-yellow-400">Berhentinya rasa menggigil</strong> secara mendadak.</li>
+              <li>Perilaku linglung, bingung, atau tindakan tidak rasional.</li>
+              <li>Sangat kesulitan berbicara atau merespon ucapan.</li>
+              <li><strong class="text-yellow-400">Bradikardia:</strong> Detak jantung melambat (&lt; 60 x/menit).</li>
+              <li><strong class="text-yellow-400">Hipoventilasi:</strong> Pernapasan menjadi sangat lambat.</li>
+              <li><strong class="text-yellow-400">Paradoxical Undressing:</strong> Korban merasa kepanasan ekstrem & melepas baju.</li>
+              <li>Kekakuan otot parah, hilangnya koordinasi, hingga kram total.</li>
+            </ul>
+          </div>
+
+          <!-- Actions -->
+          <div class="space-y-3 bg-yellow-400/5 p-4 border border-yellow-400/30">
+            <h4 class="font-bold text-yellow-400 text-sm uppercase tracking-wider border-b border-yellow-400/20 pb-1">[ TINDAKAN PERTOLONGAN ]</h4>
+            <ul class="space-y-2 text-topogray">
+              <li class="flex items-start"><span class="text-yellow-400 mr-2">▶</span> <strong class="text-yellow-400">JANGAN BIARKAN KORBAN BERJALAN</strong> karena berisiko tinggi jatuh atau pingsan mendadak.</li>
+              <li class="flex items-start"><span class="text-yellow-400 mr-2">▶</span> Lakukan penghangatan aktif luar, bisa menggunakan *hand warmer* atau botol air hangat yang dibungkus kain.</li>
+              <li class="flex items-start"><span class="text-yellow-400 mr-2">▶</span> Pantau pernapasan dan tingkat kesadaran korban secara ketat setiap saat.</li>
+              <li class="flex items-start"><span class="text-yellow-400 mr-2">▶</span> Hubungi Bantuan Darurat / Tim SAR Gunung segera agar evakuasi dapat dipersiapkan.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB CONTENT 3: BERAT -->
+      <div id="content-berat" class="tab-content hidden border-2 border-red-600 p-6 md:p-8 bg-carbon/90">
+        <div class="flex flex-col md:flex-row justify-between items-start border-b border-red-600/30 pb-4 mb-6">
+          <div>
+            <span class="bg-red-600 text-white px-2 py-0.5 font-bold font-mono text-xs">SUHU TUBUH: &lt; 28.0°C</span>
+            <h3 class="font-display text-4xl text-red-500 uppercase mt-2">HIPOTERMIA BERAT (KRITIS)</h3>
+          </div>
+          <p class="text-xs font-mono text-red-400 mt-2 md:mt-0 max-w-sm">Kondisi mengancam jiwa. Korban tampak tidak sadar atau terlihat "mati".</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs">
+          
+          <!-- Symptoms -->
+          <div class="space-y-3">
+            <h4 class="font-bold text-red-500 text-sm uppercase tracking-wider border-b border-red-600/20 pb-1">[ TANDA & GEJALA ]</h4>
+            <ul class="space-y-2 list-disc list-inside text-topogray">
+              <li><strong class="text-red-500">Tidak sadarkan diri</strong> total / tidak merespons panggilan.</li>
+              <li>Pernapasan sangat dangkal, lambat, atau hampir tidak terdeteksi.</li>
+              <li>Denyut nadi sangat lambat, lemah, atau tidak teratur.</li>
+              <li>Pupil mata mungkin membesar dan tidak bereaksi terhadap cahaya.</li>
+              <li>Kulit terasa sangat dingin membeku saat disentuh.</li>
+              <li>Risiko tinggi terhentinya detak jantung secara mendadak.</li>
+            </ul>
+          </div>
+
+          <!-- Actions -->
+          <div class="space-y-3 bg-red-600/10 p-4 border border-red-600/40">
+            <h4 class="font-bold text-red-500 text-sm uppercase tracking-wider border-b border-red-600/20 pb-1">[ PROTOKOL KRITIS MATI-RASA ]</h4>
+            <ul class="space-y-2 text-topogray">
+              <li class="flex items-start"><span class="text-red-500 mr-2">✖</span> <strong class="text-white">JANGAN BERASUMSI KORBAN SUDAH MENINGGAL!</strong></li>
+              <li class="flex items-start"><span class="text-red-500 mr-2">▶</span> Jaga posisi tubuh tetap mendatar, terlindungi dari suhu luar, dan hindari gerakan tubuh yang kasar.</li>
+              <li class="flex items-start"><span class="text-red-500 mr-2">▶</span> <strong class="text-white">Panaskan HANYA bagian INTI TUBUH</strong> (dada dan punggung), BUKAN pada kaki atau tangan (mencegah *afterdrop* darah dingin mematikan ke jantung).</li>
+              <li class="flex items-start"><span class="text-red-500 mr-2">▶</span> Hindari kompresi dada kecuali jika TIDAK ADA tanda-tanda kehidupan sama sekali (tidak ada nadi & pernapasan).</li>
+              <li class="flex items-start"><span class="text-red-500 mr-2">▶</span> Bersiap melakukan RJP (Resusitasi Jantung Paru) HANYA jika Anda terlatih.</li>
+              <li class="flex items-start"><span class="text-red-500 mr-2">▶</span> Hubungi Tim Penyelamat Gunung / SAR untuk evakuasi darurat helikopter/tandu.</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 5: DAMPAK FISIK AKIBAT HIPOTERMIA (LIGHT BAND) ==================== -->
+  <section id="dampak" class="bg-topogray text-charcoal py-16 px-4 md:px-12 border-b border-charcoal">
+    <div class="max-w-6xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-charcoal pb-4 mb-12">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-sage">[ PATOLOGI JARINGAN ]</span>
+          <h2 class="font-display text-5xl md:text-7xl leading-none text-charcoal uppercase">05. DAMPAK FISIK MEDIS</h2>
+        </div>
+        <p class="text-xs font-mono text-charcoal">[ KERUSAKAN JARINGAN ANCAMAN NYAWA ]</p>
+      </div>
+
+      <!-- 5 Physical Impacts Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
+        
+        <!-- Frostbite -->
+        <div class="border-2 border-charcoal bg-white p-5 space-y-2">
+          <div class="flex justify-between items-center border-b border-charcoal pb-2">
+            <h3 class="font-display text-2xl text-charcoal uppercase">1. FROSTBITE</h3>
+            <span class="text-[10px] bg-charcoal text-mint px-2 py-0.5 font-bold">PEMBEKUAN</span>
+          </div>
+          <p class="text-charcoal/80 text-[11px] leading-relaxed">
+            Kondisi medis yang terjadi ketika jaringan tubuh, khususnya kulit dan daging di bawahnya membeku akibat paparan suhu ekstrem yang sangat rendah secara langsung.
+          </p>
+        </div>
+
+        <!-- Chilblains -->
+        <div class="border-2 border-charcoal bg-white p-5 space-y-2">
+          <div class="flex justify-between items-center border-b border-charcoal pb-2">
+            <h3 class="font-display text-2xl text-charcoal uppercase">2. CHILBLAINS</h3>
+            <span class="text-[10px] bg-charcoal text-mint px-2 py-0.5 font-bold">PERADANGAN</span>
+          </div>
+          <p class="text-charcoal/80 text-[11px] leading-relaxed">
+            Kondisi kulit yang disebabkan oleh paparan dingin berulang kali, memicu pembengkakan, gatal, dan peradangan pada pembuluh darah kapiler kecil.
+          </p>
+        </div>
+
+        <!-- Trench foot -->
+        <div class="border-2 border-charcoal bg-white p-5 space-y-2">
+          <div class="flex justify-between items-center border-b border-charcoal pb-2">
+            <h3 class="font-display text-2xl text-charcoal uppercase">3. TRENCH FOOT</h3>
+            <span class="text-[10px] bg-charcoal text-mint px-2 py-0.5 font-bold">KELEMBAPAN</span>
+          </div>
+          <p class="text-charcoal/80 text-[11px] leading-relaxed">
+            Terjadi ketika kaki terendam dalam air atau kelembaban dingin terus-menerus dalam waktu lama tanpa dikeringkan dengan baik.
+          </p>
+        </div>
+
+        <!-- Gangrene -->
+        <div class="border-2 border-charcoal bg-white p-5 space-y-2">
+          <div class="flex justify-between items-center border-b border-charcoal pb-2">
+            <h3 class="font-display text-2xl text-charcoal uppercase">4. GANGRENE</h3>
+            <span class="text-[10px] bg-charcoal text-mint px-2 py-0.5 font-bold">KEMATIAN SEL</span>
+          </div>
+          <p class="text-charcoal/80 text-[11px] leading-relaxed">
+            Kondisi sangat serius yang disebabkan oleh kematian jaringan tubuh akibat terhentinya total aliran darah dan pasokan oksigen.
+          </p>
+        </div>
+
+        <!-- Kematian -->
+        <div class="border-2 border-charcoal bg-charcoal text-topogray p-5 space-y-2 md:col-span-2 lg:col-span-2">
+          <div class="flex justify-between items-center border-b border-mint/30 pb-2">
+            <h3 class="font-display text-2xl text-mint uppercase">5. KEMATIAN (FATALITAS)</h3>
+            <span class="text-[10px] bg-red-600 text-white px-2 py-0.5 font-bold">DISFUNGSI ORGAN</span>
+          </div>
+          <p class="text-topogray/80 text-[11px] leading-relaxed">
+            Menurunnya suhu tubuh inti di bawah batas toleransi normal mengakibatkan hilangnya fungsi sistem saraf pusat, kegagalan organ dalam secara beruntun, hingga terhentinya irama detak jantung.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 6: INTERACTIVE RISK SIMULATOR & EVALUATOR ==================== -->
+  <section id="kalkulator" class="bg-carbon text-topogray py-16 px-4 md:px-12 border-b border-mint/20 topo-bg">
+    <div class="max-w-4xl mx-auto border-2 border-mint p-6 md:p-10 bg-carbon/95">
+      
+      <!-- Section Header -->
+      <div class="border-b border-mint/30 pb-4 mb-8 text-center">
+        <span class="bg-mint text-carbon px-2 py-1 text-xs font-bold font-mono uppercase">[ TOOL EVALUASI MANDIRI ]</span>
+        <h2 class="font-display text-4xl md:text-6xl leading-none text-mint uppercase mt-2">SIMULATOR RISIKO HIPOTERMIA</h2>
+        <p class="text-xs font-mono text-sage mt-2">Pilih kondisi pendakian untuk mendiagnosis tingkat risiko & tindakan darurat instan</p>
+      </div>
+
+      <form id="risk-form" class="space-y-6 font-mono text-xs">
+        
+        <!-- Question 1: Pakaian -->
+        <div class="space-y-2">
+          <label class="block font-bold text-mint uppercase">[1] KONDISI PAKAIAN SAAT INI:</label>
+          <select id="pakaian" class="w-full bg-carbon border border-mint p-3 text-topogray focus:outline-none focus:bg-charcoal">
+            <option value="0">Kering + Menggunakan 3 Layer Lengkap (Base, Middle, Outer)</option>
+            <option value="2">Lembab / Basah oleh Keringat</option>
+            <option value="4">Basah Kuyup Terpapar Hujan / Tanpa Outer Windproof</option>
+          </select>
+        </div>
+
+        <!-- Question 2: Cuaca -->
+        <div class="space-y-2">
+          <label class="block font-bold text-mint uppercase">[2] KONDISI CUACA & LINGKUNGAN:</label>
+          <select id="cuaca" class="w-full bg-carbon border border-mint p-3 text-topogray focus:outline-none focus:bg-charcoal">
+            <option value="0">Cerah / Angin Rendah</option>
+            <option value="2">Dingin Dampak Ketinggian / Angin Sedang</option>
+            <option value="4">Badai Hujan Ekstrem / Angin Kencang (Wind Chill Tinggi)</option>
+          </select>
+        </div>
+
+        <!-- Question 3: Kondisi Fisik & Asupan -->
+        <div class="space-y-2">
+          <label class="block font-bold text-mint uppercase">[3] KONDISI FISIK & ASUPAN NUTRISI:</label>
+          <select id="fisik" class="w-full bg-carbon border border-mint p-3 text-topogray focus:outline-none focus:bg-charcoal">
+            <option value="0">Fit, Cukup Makan Makanan Berkalori & Minum Warm</option>
+            <option value="2">Lelah / Kurang Makan & Minum</option>
+            <option value="4">Kelelahan Ekstrem / Cedera / Perut Kosong</option>
+          </select>
+        </div>
+
+        <!-- Question 4: Gejala yang Dirasakan -->
+        <div class="space-y-2">
+          <label class="block font-bold text-mint uppercase">[4] TANDA & GEJALA FISIK YANG TAMPAK:</label>
+
+          <select id="gejala" class="w-full bg-carbon border border-mint p-3 text-topogray focus:outline-none focus:bg-charcoal">
+            <option value="0">Normal / Tidak Menggigil Parah</option>
+            <option value="2">Menggigil Hebat, Pelo, Pucat, Takikardia (Stage 1 Ringan)</option>
+            <option value="5">Menggigil Berhenti Mendadak, Linglung, Kaku (Stage 2 Sedang)</option>
+            <option value="8">Tidak Sadar / Pernapasan Sangat Dangkal (Stage 3 Berat)</option>
+          </select>
+        </div>
+
+        <!-- Calculate Button -->
+        <button type="button" onclick="calculateRisk()" class="w-full bg-mint text-carbon font-bold py-4 text-sm font-mono uppercase tracking-widest hover:bg-white transition">
+          [ HITUNG TINGKAT RISIKO & BACA PROTOKOL ]
+        </button>
+
+      </form>
+
+      <!-- Result Display Area -->
+      <div id="risk-result" class="hidden mt-8 p-6 border-2 font-mono text-xs space-y-3">
+        <div class="flex justify-between items-center border-b pb-2">
+          <span id="risk-title" class="font-display text-3xl uppercase"></span>
+          <span id="risk-score" class="font-bold text-sm px-2 py-0.5"></span>
+        </div>
+        <p id="risk-desc" class="text-topogray text-sm leading-relaxed"></p>
+        <div id="risk-action" class="bg-carbon/80 p-4 border text-xs space-y-1"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==================== SECTION 7: KESIMPULAN & REFERENSI (FOOTER) ==================== -->
+  <footer class="bg-carbon text-topogray py-16 px-4 md:px-12 border-t border-mint/20">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <!-- Conclusion Box -->
+      <div class="border-2 border-mint p-6 md:p-8 bg-charcoal/40">
+        <h3 class="font-display text-3xl text-mint uppercase mb-2">[ KESIMPULAN RINGKAS ]</h3>
+        <p class="font-mono text-xs md:text-sm text-topogray/90 leading-relaxed">
+          Hipotermia sering kali datang <strong class="text-mint">tanpa disadari</strong>. Berbeda dengan trauma atau pendarahan fisik, hipotermia tidak selalu tampak dramatis. Kondisi ini muncul secara perlahan, mengaburkan daya pikir, menguras tenaga, dan merenggut kemampuan seseorang untuk menyelamatkan diri. Namun, dengan pengetahuan mitigasi yang luas, kondisi yang mengancam nyawa ini dapat dihindari sepenuhnya.
+        </p>
+      </div>
+
+      <!-- Sources & Citations -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono text-xs border-t border-mint/20 pt-8">
+        <div>
+          <h4 class="font-bold text-mint mb-3 uppercase tracking-wider">[ SUMBER LITERATUR & REFERENSI ]</h4>
+          <ul class="space-y-2 text-sage text-[11px]">
+            <li>• <a href="https://www.siloamhospitals.com/informasi-siloam/artikel/apa-itu-hipotermia" target="_blank" class="hover:text-mint font-serif underline">Siloam Hospitals - Informasi Artikel Hipotermia</a></li>
+            <li>• <a href="https://www.ukclimbing.com/articles/skills/series/first_aid_skills/0hypothermia_for_mountaineers_and_hillwalkers-16560" target="_blank" class="hover:text-mint font-serif underline">UKClimbing First Aid - Hypothermia for Mountaineers</a></li>
+            <li>• <a href="https://www.mountaineering.scot/safety-and-skills/essential-skills/weather-conditions/hypothermia" target="_blank" class="hover:text-mint font-serif underline">Mountaineering Scotland - Weather & Hypothermia Safety</a></li>
+            <li>• <a href="https://www.alodokter.com/hipotermia-di-gunung-kenali-gejala-penyebab-dan-cara-mencegahnya" target="_blank" class="hover:text-mint font-serif underline">Alodokter - Hipotermia di Gunung: Gejala & Pencegahan</a></li>
+            <li>• <a href="https://www.eigeradventure.com/blog/kenali-gejala-tips-pencegahan-dan-pertolongan-pertama-hipotermia/" target="_blank" class="hover:text-mint font-serif underline">Eiger Adventure Blog - Pertolongan Pertama Hipotermia</a></li>
+          </ul>
+        </div>
+
+        <div class="text-right space-y-2 text-[10px] text-sage">
+          <p class="font-display text-2xl text-mint uppercase">ALPINE SAFE // FIELD GUIDE</p>
+          <p>SISTEM MITIGASI BENCANA HIPOTERMIA PENDAKIAN</p>
+          <p>© 2026 FIELD GUIDE SYSTEM. ALL RIGHTS RESERVED.</p>
+          <p class="text-mint">[ DESIGN LANGUAGE: SAN RITA STYLE ]</p>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- JavaScript Interactivity -->
+  <script>
+    // Mobile Menu Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Switch Tabs Functionality
+    function switchTab(tab) {
+      const tabs = ['ringan', 'sedang', 'berat'];
+      
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        const content = document.getElementById(`content-${t}`);
+        
+        if (t === tab) {
+          btn.classList.add('active');
+          content.classList.remove('hidden');
+        } else {
+          btn.classList.remove('active');
+          content.classList.add('hidden');
+        }
+      });
+    }
+
+    // Risk Calculator Functionality
+    function calculateRisk() {
+      const pakaian = parseInt(document.getElementById('pakaian').value);
+      const cuaca = parseInt(document.getElementById('cuaca').value);
+      const fisik = parseInt(document.getElementById('fisik').value);
+      const gejala = parseInt(document.getElementById('gejala').value);
+
+      const totalScore = pakaian + cuaca + fisik + gejala;
+
+      const resultDiv = document.getElementById('risk-result');
+      const titleSpan = document.getElementById('risk-title');
+      const scoreSpan = document.getElementById('risk-score');
+      const descP = document.getElementById('risk-desc');
+      const actionDiv = document.getElementById('risk-action');
+
+      resultDiv.classList.remove('hidden');
+
+      if (totalScore <= 3) {
+        // Low Risk
+        resultDiv.className = "mt-8 p-6 border-2 border-mint bg-carbon/90 font-mono text-xs space-y-3";
+        titleSpan.className = "font-display text-3xl uppercase text-mint";
+        titleSpan.innerText = "RISIKO AMAN / RENDAH";
+        scoreSpan.className = "font-bold text-sm bg-mint text-carbon px-2 py-0.5";
+        scoreSpan.innerText = `SKOR: ${totalScore}/17`;
+        descP.innerText = "Kondisi tubuh dan proteksi fisik Anda dalam keadaan stabil. Tetap pertahankan manajemen sirkulasi udara dan asupan cairan hangat.";
+        actionDiv.innerHTML = "<p class='text-mint font-bold'>▶ TIKET TINDAKAN:</p><p class='text-topogray'>• Lanjutkan pendakian dengan menjaga ritme.<br>• Konsumsi camilan tinggi kalori tiap 1-2 jam.</p>";
+      } else if (totalScore <= 7) {
+        // Moderate Risk
+        resultDiv.className = "mt-8 p-6 border-2 border-yellow-400 bg-carbon/90 font-mono text-xs space-y-3";
+        titleSpan.className = "font-display text-3xl uppercase text-yellow-400";
+        titleSpan.innerText = "RISIKO SEDANG / WASPADA";
+        scoreSpan.className = "font-bold text-sm bg-yellow-400 text-carbon px-2 py-0.5";
+        scoreSpan.innerText = `SKOR: ${totalScore}/17`;
+        descP.innerText = "Tubuh menunjukkan tanda kelelahan atau paparan dingin yang mulai memicu penurunan suhu tubuh awal.";
+        actionDiv.innerHTML = "<p class='text-yellow-400 font-bold'>▶ TIKET TINDAKAN:</p><p class='text-topogray'>• Segera ganti pakaian lembab.<br>• Pasang outer windproof.<br>• Istirahat sejenak dan minum cairan manis hangat.</p>";
+      } else if (totalScore <= 11) {
+        // High Risk / Stage 1-2
+        resultDiv.className = "mt-8 p-6 border-2 border-orange-500 bg-carbon/90 font-mono text-xs space-y-3";
+        titleSpan.className = "font-display text-3xl uppercase text-orange-500";
+        titleSpan.innerText = "RISIKO TINGGI (HIPOTERMIA RINGAN/SEDANG)";
+        scoreSpan.className = "font-bold text-sm bg-orange-500 text-white px-2 py-0.5";
+        scoreSpan.innerText = `SKOR: ${totalScore}/17`;
+        descP.innerText = "KORBAN DALAM BAHAYA! Puncak penurunan suhu tubuh sedang terjadi. Koordinasi tubuh dan fungsi mental terganggu.";
+        actionDiv.innerHTML = "<p class='text-orange-500 font-bold'>▶ PROTOKOL DARURAT:</p><p class='text-topogray'>• Bawa korban ke shelter/tenda SEGERA.<br>• Selimuti dengan sleeping bag & emergency blanket.<br>• Beri pemanas aktif (*hand warmer*).<br>• JANGAN biarkan korban berjalan!</p>";
+      } else {
+        // Critical Risk / Stage 3
+        resultDiv.className = "mt-8 p-6 border-2 border-red-600 bg-carbon/90 font-mono text-xs space-y-3";
+        titleSpan.className = "font-display text-3xl uppercase text-red-500";
+        titleSpan.innerText = "DARURAT KRITIS (HIPOTERMIA BERAT)";
+        scoreSpan.className = "font-bold text-sm bg-red-600 text-white px-2 py-0.5";
+        scoreSpan.innerText = `SKOR: ${totalScore}/17`;
+        descP.innerText = "KONDISI MENGANCAM JIWA! Korban berisiko mengalami henti jantung atau kehilangan kesadaran total.";
+        actionDiv.innerHTML = "<p class='text-red-500 font-bold'>▶ PROTOKOL CRITICAL EVACUATION:</p><p class='text-topogray'>• Buka jalur komunikasi dengan TIM SAR GUNUNG.<br>• Panaskan HANYA bagian inti tubuh (dada/punggung).<br>• Hindari gerakan kasar pada korban.<br>• Bersiap RJP jika napas & nadi hilang.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
